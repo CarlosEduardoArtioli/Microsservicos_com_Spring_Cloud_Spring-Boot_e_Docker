@@ -23,7 +23,7 @@ public class BookController {
     private BookRepository repository;
 
     @Autowired
-    CambioProxy cambioProxy;
+    private CambioProxy cambioProxy;
 
     @GetMapping(value = "/{id}/{currency}")
     public Book findBook(
@@ -32,10 +32,10 @@ public class BookController {
     ) {
         var book = repository.findById(id).orElseThrow(() -> new RuntimeException("Book not found"));
 
-        var cambio = cambioProxy.getCambio(BigDecimal.valueOf(book.getPrice()), book.getCurrency(), currency);
+        var cambio = cambioProxy.getCambio(BigDecimal.valueOf(book.getPrice()), "USD", currency);
 
         var port = environment.getProperty("local.server.port");
-        book.setEnvironment(port);
+        book.setEnvironment("Book port: " + port + " Cambio port: " + cambio.getEnviroment());
         book.setPrice(cambio.getConvertedValue().doubleValue());
 
         return book;

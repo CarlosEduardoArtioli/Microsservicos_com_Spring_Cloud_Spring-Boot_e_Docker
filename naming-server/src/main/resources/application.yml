@@ -3,9 +3,6 @@ server:
 spring:
   application:
     name: naming-server
-  cloud:
-    config:
-      enabled: false
 eureka:
   client:
     register-with-eureka: false
