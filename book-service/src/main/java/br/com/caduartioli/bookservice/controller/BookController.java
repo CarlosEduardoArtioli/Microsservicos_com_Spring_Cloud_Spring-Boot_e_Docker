@@ -3,6 +3,8 @@ package br.com.caduartioli.bookservice.controller;
 import br.com.caduartioli.bookservice.model.Book;
 import br.com.caduartioli.bookservice.proxy.CambioProxy;
 import br.com.caduartioli.bookservice.repository.BookRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
 
+@Tag(name = "Book endpoint")
 @RestController
 @RequestMapping("book-service")
 public class BookController {
@@ -26,6 +29,7 @@ public class BookController {
     private CambioProxy cambioProxy;
 
     @GetMapping(value = "/{id}/{currency}")
+    @Operation(summary = "Find a specific book by your ID")
     public Book findBook(
             @PathVariable("id") Long id,
             @PathVariable("currency") String currency
